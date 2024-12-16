@@ -4,28 +4,33 @@ using namespace std;
 
 class Hero
 {
-private:
+public:
+    char *name;
+    char level;
     int health;
 
-public:
-    char level;
-
-    // getter
-    int getHealth()
+    void print()
     {
-        return health;
+        cout << "Name: " << this->name << endl;
+        cout << "Level: " << this->level << endl;
+        cout << "Health: " << this->health << endl;
     }
 
-    // setter
-    void setHealth(int h)
+    // constructor
+    Hero()
     {
-        health = h;
+        cout << "Constructor called!!" << endl;
+    }
+
+    // copy constructor
+    Hero(Hero &temp)
+    { 
+        
     }
 };
 
 int main()
 {
-    Hero ramesh;
 
     // static allocation
     // Hero Akshay;
