@@ -40,11 +40,19 @@ int getLength(Node *head)
     }
     return len;
 }
-
+void insertAtHead(Node *&head, int d)
+{
+    Node *temp = new Node(d);
+    temp->next = head;
+    head->prev = temp;
+    head = temp;
+}
 int main()
 {
     Node *node1 = new Node(1);
     Node *head = node1;
     cout << getLength(head);
+    print(head);
+    insertAtHead(head, 2);
     print(head);
 }
