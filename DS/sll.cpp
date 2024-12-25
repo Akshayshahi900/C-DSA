@@ -21,6 +21,7 @@ void print(Node *&head)
         cout << temp->data << " ";
         temp = temp->next;
     }
+    cout << endl;
 }
 void insertAtHead(Node *&head, int d)
 {
@@ -34,44 +35,73 @@ void insertAtTail(Node *&tail, int d)
     tail->next = temp;
     tail = tail->next;
 }
-void InsertAtTail(Node *&head, int d)
-{
-    Node *temp = head;
-    while (temp != NULL)
-    {
-        temp = temp->next;
-    }
-    // now the temp contains the last node
-    Node *temp2 = new Node(d);
-    temp->next = temp2;
-    temp = temp2->next;
-}
-void insertAtPosition(Node *&head, int d, int position)
+
+void insertAtPosition(Node *&tail, Node *&head, int d, int position)
 {
     if (position == 1)
     {
         insertAtHead(head, d);
         return;
     }
-    else
-    { // traversing
+
+    // traversing
+    Node *temp = head;
+    int cnt = 0;
+    while (cnt < position - 1)
+    {
+        temp = temp->next;
+        cnt++;
+    }
+
+    // insertion at end of the list
+    if (temp->next == NULL)
+    {
+        insertAtTail(tail, d);
+        return;
+    }
+
+    Node *nodeToInsert = new Node(d);
+    nodeToInsert->next = temp->next;
+    temp->next = nodeToInsert;
+}
+void deleteNode(int position, Node *&head)
+{
+    if (position == 1)
+    {
         Node *temp = head;
-        int cnt = 0;
-        while (cnt < position - 1)
+        head = head->next;
+        // memory free start node
+        temp->next = NULL;
+        delete temp;
+    }
+    else
+    {
+        Node *curr = head;
+        Node *prev = NULL;
+
+        int cnt = 1;
+        while (cnt < position)
         {
-            temp = temp->next;
+            prev = curr;
+            curr = curr->next;
             cnt++;
         }
+        prev->next = curr->next;
+        curr->next = NULL;
+        delete curr;
     }
 }
 int main()
 {
-    Node *node1 = new Node(1);
+    Node *node1 = new Node(2);
     Node *head = node1;
     Node *tail = node1;
 
     print(head);
-    // InsertAtTail(head , 11);
     insertAtTail(tail, 12);
+    print(head);
+    insertAtTail(tail, 13);
+    print(head);
+    deleteNode(2, head);
     print(head);
 }
